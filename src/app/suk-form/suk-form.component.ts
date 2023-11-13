@@ -1,19 +1,16 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
 
 import {
-  FormBuilder,
   FormGroup,
   FormControl,
-  AbstractControl,
-  Validators
-} from '@angular/forms';
+} from '@angular/forms'
 
-function skuValidator(control: FormControl): { [s: string]: boolean } | null {
-  if (!control.value.match(/^123/)) {
-    return {invalidSku: true}; 
-  }
-  return null
-}
+// function skuValidator(control: FormControl): { [s: string]: boolean } | null {
+//   if (!control.value.match(/^123/)) {
+//     return {invalidSku: true}
+//   }
+//   return null
+// }
 
 @Component({
   selector: 'app-suk-form',
@@ -22,21 +19,13 @@ function skuValidator(control: FormControl): { [s: string]: boolean } | null {
 })
 
 export class SukFormComponent {
-  myForm: FormGroup
-  sku: AbstractControl
+  myForm = new FormGroup({
+    sku: new FormControl(''),
+    productName: new FormControl('')
+  })
 
-  constructor(fb: FormBuilder) {
-    this.myForm = fb.group({
-      'sukInput': ['ABC123', 
-        Validators.compose(
-          [Validators.required, skuValidator]
-        ), 
-      ]
-    })
-
-    this.sku = this.myForm.controls['sukInput']
-  }
-  onSubmit(sku: string){
-    console.log('you submitted value:', sku);
+  constructor() {}
+  onSubmit(){
+    console.log('you submitted value:', this.myForm.value)
   }
 }
